@@ -1,4 +1,5 @@
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.Google;
 
 static class Gemini
@@ -19,7 +20,17 @@ static class Gemini
             // FunctionChoiceBehavior = FunctionChoiceBehavior.Auto(),
             // ToolCallBehavior = GeminiToolCallBehavior.AutoInvokeKernelFunctions
         };
-        var result = await kernel.InvokePromptAsync(prompt, new(settings)).ConfigureAwait(false);
-        return result.ToString();
+
+        // トリミング対応のため以下は使用せず GetRequiredService に置き換え
+        // var result = await kernel.InvokePromptAsync(prompt, new(settings)).ConfigureAwait(false);
+        // return result.ToString();
+
+        var chat = kernel.GetRequiredService<IChatCompletionService>("gemini");
+        var response = await chat.GetChatMessageContentAsync(
+            prompt,
+            settings,
+            kernel
+        ).ConfigureAwait(false);
+        return response?.Content ?? string.Empty;
     } 
 }

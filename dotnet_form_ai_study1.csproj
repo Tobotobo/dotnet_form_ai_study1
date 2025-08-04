@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -9,7 +9,11 @@
     <SelfContained>true</SelfContained>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <DebugType>embedded</DebugType>
-    <!-- <PublishTrimmed>true</PublishTrimmed> -->
+    <PublishTrimmed>true</PublishTrimmed>
+    <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+    <TrimMode>copyused</TrimMode>
+    <!-- <PublishReadyToRun>true</PublishReadyToRun> -->
+    <!-- <PublishAot>true</PublishAot> -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +21,10 @@
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.61.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Google" Version="1.61.0-alpha" />
     <PackageReference Include="NXUI.Desktop" Version="11.3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="Microsoft.SemanticKernel.Connectors.Google" />
   </ItemGroup>
 
 </Project>
